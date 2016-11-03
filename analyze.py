@@ -2,7 +2,6 @@ import sys, operator
 
 patterns = {}
 
-
 with open(sys.argv[1]) as f:
 	passwords = f.read().splitlines()
 
@@ -35,4 +34,3 @@ except IndexError:
 
 for i in range(0, int(limit)):
 	print("{} ... freq: {}").format(sorted_patterns[i], sorted_patterns[i][1]/total)
-	

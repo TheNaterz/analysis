@@ -17,9 +17,9 @@ for password in passwords:
 		else:
 			pattern += "?s"
 	try:
-		patterns[pattern] += 100
+		patterns[pattern] += 1
 	except KeyError:
-		patterns[pattern] = 100
+		patterns[pattern] = 1
 
 
 sorted_patterns = sorted(patterns.items(), key=operator.itemgetter(1), reverse=True)
@@ -33,4 +33,4 @@ except IndexError:
 	limit = 19
 
 for i in range(0, int(limit)):
-	print("{} ... freq: {}").format(sorted_patterns[i], sorted_patterns[i][1]/total)
+	print("{} ... freq: {}").format(sorted_patterns[i], (sorted_patterns[i][1]/total)*100)

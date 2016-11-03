@@ -35,3 +35,4 @@ except IndexError:
 
 for i in range(0, int(limit)):
 	print("{} ... freq: {}").format(sorted_patterns[i], sorted_patterns[i][1]/total)
+	

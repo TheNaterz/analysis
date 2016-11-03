@@ -8,35 +8,46 @@ with open(sys.argv[1]) as f:
 for password in passwords:
 	value = []
 	pattern = ""
-	weight = 1
+	keyspace = 1
 	for char in password:
 		if char.islower():
 			pattern += "?l"
-			weight *= 26
+			keyspace *= 26
 		elif char.isupper():
 			pattern += "?u"
-			weight *= 26
+			keyspace *= 26
 		elif char.isdigit():
 			pattern += "?d"
-			weight *= 10
+			keyspace *= 10
 		else:
 			pattern += "?s"
-			weight *= 33
+			keyspace *= 33
 	try:
 		patterns[pattern][0] += 1
 	except KeyError:
-		patterns[pattern] = [1, weight]
+		patterns[pattern] = [1, keyspace]
 
+sorted_patterns = sorted(patterns.items(), key=lambda x:x[1][0], reverse=True)
+maximum_pop = sorted_patterns[0][1][0]
 
-sorted_patterns = sorted(patterns.items(), key=lambda x:x[1][1])
+lower_eff = 2500000000
+upper_eff = lower_eff*3600
 
-total = len(passwords)
-total *= 1.0
+patterns_2 = {}
 
-try:
-	limit = sys.argv[2]
-except IndexError:
-	limit = 19
+for p in patterns:
+	value = []
+	effort = (patterns[p][1] - lower_eff)*1.0
+	if effort < 0:
+		effort = 1
+	elif effort > (upper_eff-lower_eff):
+		effort = 0
+	else:
+		effort = effort / (upper_eff-lower_eff)
 
-for i in range(0, int(limit)):
-	print("{} ... freq: {}").format(sorted_patterns[i], (sorted_patterns[i][1][0]/total)*100)
+	cost = ((patterns[p][0]*1.0)/maximum_pop)*effort
+	patterns_2[p] = [cost, patterns[p][0], patterns[p][1]]
+
+sorted_patterns_2 = sorted(patterns_2.items(), key=lambda x:x[1], reverse=True)
+for i in range(0,19):
+	print("{}").format(sorted_patterns_2[i])

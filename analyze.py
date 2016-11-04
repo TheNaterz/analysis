@@ -36,14 +36,13 @@ upper_eff = lower_eff*3600
 patterns_2 = {}
 
 for p in patterns:
-	value = []
 	effort = (patterns[p][1] - lower_eff)*1.0
-	if effort < 0:
+	if effort < 1:
 		effort = 1
 	elif effort > (upper_eff-lower_eff):
 		effort = 0
 	else:
-		effort = effort / (upper_eff-lower_eff)
+		effort = 1-(effort / (upper_eff-lower_eff))
 
 	cost = ((patterns[p][0]*1.0)/maximum_pop)*effort
 	patterns_2[p] = [cost, patterns[p][0], patterns[p][1]]
